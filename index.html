@@ -11,7 +11,935 @@
       --navy:   #0d1b2a;
       --dark:   #1b2d42;
       --mid:    #1e3a5f;
+      --blue:   #15<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quimex Market — Marketplace de Productos Químicos</title>
+  <style>
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --navy:   #0d1b2a;
+      --dark:   #1b2d42;
+      --mid:    #1e3a5f;
       --blue:   #1565c0;
+      --sky:    #1e88e5;
+      --light:  #42a5f5;
+      --cyan:   #00bcd4;
+      --white:  #ffffff;
+      --offwhite: #f0f4f8;
+      --gray:   #90a4ae;
+      --text:   #e3eaf2;
+      --accent: #00e5ff;
+      --danger: #ef5350;
+      --warn:   #ff9800;
+      --success:#66bb6a;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: var(--offwhite);
+      color: #1a2535;
+      line-height: 1.6;
+    }
+
+    /* ===== NAV ===== */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--navy);
+      border-bottom: 2px solid var(--sky);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 2rem;
+      height: 64px;
+      box-shadow: 0 2px 16px rgba(0,0,0,.4);
+    }
+    .logo {
+      display: flex; align-items: center; gap: .7rem;
+      text-decoration: none;
+    }
+    .logo-icon {
+      width: 36px; height: 36px;
+      background: linear-gradient(135deg, var(--sky), var(--cyan));
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; font-weight: 900; color: var(--white);
+    }
+    .logo-text { color: var(--white); font-size: 1.15rem; font-weight: 700; letter-spacing: .5px; }
+    .logo-text span { color: var(--accent); }
+    .nav-links { display: flex; gap: .25rem; }
+    .nav-links button {
+      background: none; border: none; cursor: pointer;
+      color: var(--gray); font-size: .88rem; font-weight: 500;
+      padding: .45rem .9rem; border-radius: 6px;
+      transition: all .2s;
+      letter-spacing: .3px;
+    }
+    .nav-links button:hover,
+    .nav-links button.active {
+      color: var(--white);
+      background: var(--mid);
+    }
+    .nav-links button.active { color: var(--accent); }
+
+    /* ===== PAGES ===== */
+    .page { display: none; }
+    .page.active { display: block; }
+
+    /* ===== HERO ===== */
+    .hero {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--mid) 60%, var(--blue) 100%);
+      padding: 5rem 2rem 4rem;
+      text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; top: -60px; right: -60px;
+      width: 320px; height: 320px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0,188,212,.15), transparent 70%);
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(0,229,255,.12);
+      border: 1px solid rgba(0,229,255,.3);
+      color: var(--accent);
+      font-size: .78rem; font-weight: 600; letter-spacing: 1.5px;
+      padding: .35rem 1rem; border-radius: 50px;
+      margin-bottom: 1.5rem; text-transform: uppercase;
+    }
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      color: var(--white); font-weight: 800; line-height: 1.15;
+      margin-bottom: 1.2rem;
+    }
+    .hero h1 span { color: var(--accent); }
+    .hero p {
+      color: var(--text); font-size: 1.05rem; max-width: 620px;
+      margin: 0 auto 2rem;
+    }
+    .hero-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--sky), var(--cyan));
+      color: var(--white); border: none; cursor: pointer;
+      padding: .75rem 2rem; border-radius: 8px;
+      font-size: .95rem; font-weight: 600;
+      transition: all .2s; box-shadow: 0 4px 16px rgba(30,136,229,.4);
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(30,136,229,.5); }
+    .btn-outline {
+      background: transparent;
+      color: var(--accent); border: 1.5px solid var(--accent);
+      cursor: pointer; padding: .75rem 2rem; border-radius: 8px;
+      font-size: .95rem; font-weight: 600; transition: all .2s;
+    }
+    .btn-outline:hover { background: rgba(0,229,255,.08); }
+
+    /* ===== STATS BAR ===== */
+    .stats-bar {
+      background: var(--dark);
+      display: flex; justify-content: center; flex-wrap: wrap;
+      gap: 0; border-bottom: 1px solid rgba(255,255,255,.05);
+    }
+    .stat-item {
+      padding: 1.2rem 2.5rem;
+      text-align: center;
+      border-right: 1px solid rgba(255,255,255,.08);
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-num { font-size: 1.6rem; font-weight: 800; color: var(--accent); }
+    .stat-label { font-size: .75rem; color: var(--gray); text-transform: uppercase; letter-spacing: 1px; }
+
+    /* ===== SECTION CONTAINER ===== */
+    .section { padding: 3.5rem 2rem; max-width: 1200px; margin: 0 auto; }
+    .section-title {
+      font-size: 1.6rem; font-weight: 800; color: var(--navy);
+      margin-bottom: .5rem;
+    }
+    .section-title span { color: var(--blue); }
+    .section-sub { color: #5a7a99; font-size: .9rem; margin-bottom: 2rem; }
+    .divider {
+      width: 48px; height: 3px;
+      background: linear-gradient(90deg, var(--sky), var(--cyan));
+      border-radius: 2px; margin-bottom: .8rem;
+    }
+
+    /* ===== CATEGORY CARDS ===== */
+    .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1.2rem; }
+    .cat-card {
+      background: var(--white); border-radius: 12px;
+      padding: 1.5rem 1rem; text-align: center;
+      border: 1px solid #dce8f5;
+      transition: all .25s; cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0,0,0,.06);
+    }
+    .cat-card:hover { transform: translateY(-4px); border-color: var(--sky); box-shadow: 0 8px 24px rgba(30,136,229,.15); }
+    .cat-icon { font-size: 2.2rem; margin-bottom: .8rem; }
+    .cat-name { font-weight: 700; color: var(--navy); font-size: .92rem; margin-bottom: .3rem; }
+    .cat-count { color: var(--gray); font-size: .78rem; }
+
+    /* ===== PRODUCT CARDS ===== */
+    .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.5rem; }
+    .product-card {
+      background: var(--white); border-radius: 14px;
+      border: 1px solid #dce8f5; overflow: hidden;
+      transition: all .25s; box-shadow: 0 2px 8px rgba(0,0,0,.06);
+    }
+    .product-card:hover { transform: translateY(-4px); box-shadow: 0 10px 28px rgba(21,101,192,.15); }
+    .product-img {
+      height: 140px;
+      background: linear-gradient(135deg, var(--navy) 0%, var(--mid) 100%);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 3.5rem; position: relative;
+    }
+    .danger-badge {
+      position: absolute; top: 10px; right: 10px;
+      padding: .2rem .6rem; border-radius: 50px;
+      font-size: .68rem; font-weight: 700; letter-spacing: .5px;
+    }
+    .danger-alto { background: rgba(239,83,80,.15); color: #ef5350; border: 1px solid rgba(239,83,80,.3); }
+    .danger-medio { background: rgba(255,152,0,.15); color: #ff9800; border: 1px solid rgba(255,152,0,.3); }
+    .danger-bajo { background: rgba(102,187,106,.15); color: #4caf50; border: 1px solid rgba(102,187,106,.3); }
+    .product-body { padding: 1.2rem; }
+    .product-code { color: var(--gray); font-size: .72rem; font-weight: 600; letter-spacing: .8px; text-transform: uppercase; margin-bottom: .3rem; }
+    .product-name { font-weight: 700; color: var(--navy); font-size: 1rem; margin-bottom: .4rem; }
+    .product-cat { color: var(--sky); font-size: .78rem; margin-bottom: .8rem; }
+    .product-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: .9rem; }
+    .product-price { font-size: 1.2rem; font-weight: 800; color: var(--blue); }
+    .product-stock { font-size: .78rem; color: var(--gray); }
+    .product-fab { font-size: .78rem; color: #7a9abc; margin-bottom: .9rem; }
+    .add-btn {
+      width: 100%; background: linear-gradient(135deg, var(--sky), var(--blue));
+      color: var(--white); border: none; cursor: pointer;
+      padding: .6rem; border-radius: 8px; font-weight: 600; font-size: .85rem;
+      transition: all .2s;
+    }
+    .add-btn:hover { opacity: .9; }
+
+    /* ===== FILTER BAR ===== */
+    .filter-bar {
+      display: flex; gap: .7rem; flex-wrap: wrap; margin-bottom: 2rem;
+    }
+    .filter-btn {
+      padding: .4rem 1.1rem; border-radius: 50px;
+      border: 1.5px solid #cdd8e8; background: var(--white);
+      color: #4a6a8a; font-size: .82rem; font-weight: 600; cursor: pointer;
+      transition: all .2s;
+    }
+    .filter-btn:hover, .filter-btn.active {
+      background: var(--blue); border-color: var(--blue); color: var(--white);
+    }
+
+    /* ===== TABLE ===== */
+    .table-wrap { overflow-x: auto; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,.07); }
+    table { width: 100%; border-collapse: collapse; background: var(--white); }
+    thead { background: var(--navy); }
+    thead th { color: var(--accent); font-size: .78rem; letter-spacing: 1px; text-transform: uppercase; padding: 1rem 1.2rem; text-align: left; }
+    tbody tr { border-bottom: 1px solid #eef2f7; transition: background .15s; }
+    tbody tr:hover { background: #f5f9ff; }
+    tbody td { padding: .85rem 1.2rem; font-size: .88rem; color: #2a3f5a; }
+    .badge {
+      display: inline-block; padding: .2rem .7rem; border-radius: 50px;
+      font-size: .72rem; font-weight: 700;
+    }
+    .badge-blue { background: #e3f2fd; color: var(--blue); }
+    .badge-green { background: #e8f5e9; color: #2e7d32; }
+    .badge-orange { background: #fff3e0; color: #e65100; }
+    .badge-red { background: #ffebee; color: #c62828; }
+    .badge-gray { background: #eceff1; color: #546e7a; }
+
+    /* ===== INFO CARDS ===== */
+    .info-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.2rem; }
+    .info-card {
+      background: var(--white); border-radius: 12px;
+      padding: 1.5rem; border: 1px solid #dce8f5;
+      box-shadow: 0 2px 8px rgba(0,0,0,.05);
+    }
+    .info-card h3 { font-size: 1rem; color: var(--navy); font-weight: 700; margin-bottom: .8rem; }
+    .info-row { display: flex; justify-content: space-between; padding: .4rem 0; border-bottom: 1px solid #f0f4f8; font-size: .85rem; }
+    .info-row:last-child { border-bottom: none; }
+    .info-key { color: var(--gray); }
+    .info-val { color: var(--navy); font-weight: 600; }
+
+    /* ===== ACADEMIC PAGE ===== */
+    .academic-hero {
+      background: linear-gradient(135deg, var(--navy), var(--dark));
+      padding: 3.5rem 2rem; text-align: center;
+    }
+    .academic-hero h1 { color: var(--white); font-size: 2rem; font-weight: 800; margin-bottom: .5rem; }
+    .academic-hero p { color: var(--text); max-width: 600px; margin: 0 auto; }
+
+    .concept-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.2rem; margin-bottom: 3rem; }
+    .concept-card {
+      background: var(--white); border-radius: 12px; padding: 1.5rem;
+      border-left: 4px solid var(--sky);
+      box-shadow: 0 2px 8px rgba(0,0,0,.06);
+    }
+    .concept-card h3 { font-size: .95rem; font-weight: 700; color: var(--navy); margin-bottom: .5rem; }
+    .concept-card p { font-size: .85rem; color: #4a6080; line-height: 1.5; }
+    .concept-card .concept-icon { font-size: 1.6rem; margin-bottom: .7rem; }
+
+    /* registro block */
+    .reg-block {
+      background: var(--navy); border-radius: 12px; overflow: hidden;
+      margin-bottom: 2rem; box-shadow: 0 4px 20px rgba(0,0,0,.2);
+    }
+    .reg-header {
+      background: linear-gradient(135deg, var(--mid), var(--blue));
+      padding: 1rem 1.5rem;
+      display: flex; align-items: center; gap: .8rem;
+    }
+    .reg-header h3 { color: var(--white); font-size: 1rem; font-weight: 700; }
+    .reg-header .reg-tag {
+      font-size: .7rem; background: rgba(255,255,255,.15);
+      color: var(--accent); padding: .2rem .7rem; border-radius: 50px; font-weight: 600;
+    }
+    .reg-body { padding: 1.2rem 1.5rem; }
+    .reg-field {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr auto;
+      gap: .5rem; padding: .5rem .7rem;
+      border-radius: 6px; margin-bottom: .4rem; align-items: center;
+      font-size: .82rem;
+    }
+    .reg-field:nth-child(odd) { background: rgba(255,255,255,.04); }
+    .reg-field:nth-child(even) { background: rgba(255,255,255,.02); }
+    .f-name { color: var(--light); font-weight: 600; font-family: 'Courier New', monospace; }
+    .f-type { color: var(--accent); font-family: 'Courier New', monospace; }
+    .f-size { color: var(--gray); font-family: 'Courier New', monospace; }
+    .f-badge {
+      font-size: .65rem; font-weight: 700; padding: .15rem .5rem;
+      border-radius: 4px; text-align: center; white-space: nowrap;
+    }
+    .f-pk { background: rgba(239,83,80,.2); color: #ef9a9a; border: 1px solid rgba(239,83,80,.3); }
+    .f-sk { background: rgba(255,152,0,.2); color: #ffcc80; border: 1px solid rgba(255,152,0,.3); }
+    .f-fk { background: rgba(102,187,106,.2); color: #a5d6a7; border: 1px solid rgba(102,187,106,.3); }
+    .f-cont { background: rgba(0,188,212,.2); color: #80deea; border: 1px solid rgba(0,188,212,.3); }
+    .f-end { color: var(--gray); font-size: .78rem; padding: .5rem .7rem; font-family: 'Courier New', monospace; }
+
+    /* subregister inside reg-block */
+    .sub-reg {
+      margin: .5rem .7rem .5rem 1.5rem;
+      border-left: 2px solid var(--cyan);
+      padding-left: .8rem;
+    }
+    .sub-reg-label { color: var(--cyan); font-size: .75rem; font-family: 'Courier New', monospace; margin-bottom: .3rem; }
+
+    /* selector table */
+    .selector-table { width: 100%; border-collapse: collapse; font-family: 'Courier New', monospace; font-size: .85rem; }
+    .selector-table th { background: var(--dark); color: var(--accent); padding: .7rem 1rem; text-align: left; font-size: .75rem; letter-spacing: 1px; }
+    .selector-table td { padding: .6rem 1rem; border-bottom: 1px solid rgba(255,255,255,.05); }
+    .selector-table tr:hover td { background: rgba(255,255,255,.03); }
+    .sel-expr { color: var(--light); }
+    .sel-desc { color: var(--gray); font-size: .8rem; font-family: 'Segoe UI', sans-serif; }
+
+    /* hetero */
+    .hetero-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 1rem; }
+    .hetero-card {
+      background: var(--white); border-radius: 10px; padding: 1.2rem;
+      border-top: 3px solid var(--sky); text-align: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,.06);
+    }
+    .hetero-field { font-size: 1rem; font-weight: 700; color: var(--navy); font-family: 'Courier New', monospace; }
+    .hetero-type { font-size: .85rem; color: var(--blue); font-weight: 700; margin: .3rem 0; }
+    .hetero-label { font-size: .75rem; color: var(--gray); }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: var(--navy);
+      padding: 2.5rem 2rem;
+      text-align: center;
+      border-top: 1px solid rgba(255,255,255,.06);
+      margin-top: 3rem;
+    }
+    footer .foot-logo { font-size: 1.2rem; font-weight: 800; color: var(--white); margin-bottom: .5rem; }
+    footer .foot-logo span { color: var(--accent); }
+    footer p { color: var(--gray); font-size: .82rem; }
+    footer .foot-links { display: flex; justify-content: center; gap: 1.5rem; margin: 1rem 0; flex-wrap: wrap; }
+    footer .foot-links button {
+      background: none; border: none; color: var(--gray); font-size: .82rem;
+      cursor: pointer; transition: color .2s;
+    }
+    footer .foot-links button:hover { color: var(--accent); }
+    .foot-badge {
+      display: inline-block; background: rgba(0,229,255,.1); border: 1px solid rgba(0,229,255,.2);
+      color: var(--accent); font-size: .72rem; padding: .3rem .8rem; border-radius: 50px; margin-top: .8rem;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 640px) {
+      .nav-links button { padding: .4rem .6rem; font-size: .78rem; }
+      .stat-item { padding: 1rem 1.2rem; }
+      .reg-field { grid-template-columns: 1fr 1fr; }
+      .f-size, .f-badge { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===== NAV ===== -->
+<nav>
+  <a class="logo" href="#" onclick="showPage('inicio')">
+    <div class="logo-icon">Q</div>
+    <span class="logo-text">Quimex <span>Market</span></span>
+  </a>
+  <div class="nav-links">
+    <button onclick="showPage('inicio')" id="nav-inicio" class="active">Inicio</button>
+    <button onclick="showPage('productos')" id="nav-productos">Productos</button>
+    <button onclick="showPage('clientes')" id="nav-clientes">Clientes</button>
+    <button onclick="showPage('proveedores')" id="nav-proveedores">Proveedores</button>
+    <button onclick="showPage('pedidos')" id="nav-pedidos">Pedidos</button>
+    <button onclick="showPage('registros')" id="nav-registros">📋 Registros</button>
+  </div>
+</nav>
+
+<!-- ================================================================ -->
+<!-- PÁGINA: INICIO -->
+<!-- ================================================================ -->
+<div class="page active" id="page-inicio">
+
+  <div class="hero">
+    <div class="hero-badge">🧪 Marketplace Especializado</div>
+    <h1>Productos Químicos<br/><span>de Alta Calidad</span></h1>
+    <p>Quimex Market conecta laboratorios, industrias y universidades con proveedores certificados de insumos químicos industriales, agrícolas y de laboratorio.</p>
+    <div class="hero-buttons">
+      <button class="btn-primary" onclick="showPage('productos')">Ver Catálogo</button>
+      <button class="btn-outline" onclick="showPage('registros')">Ver Registros</button>
+    </div>
+  </div>
+
+  <div class="stats-bar">
+    <div class="stat-item"><div class="stat-num">1.200+</div><div class="stat-label">Productos</div></div>
+    <div class="stat-item"><div class="stat-num">340</div><div class="stat-label">Clientes activos</div></div>
+    <div class="stat-item"><div class="stat-num">85</div><div class="stat-label">Proveedores</div></div>
+    <div class="stat-item"><div class="stat-num">5</div><div class="stat-label">Registros</div></div>
+  </div>
+
+  <div class="section">
+    <div class="divider"></div>
+    <h2 class="section-title">Categorías <span>Principales</span></h2>
+    <p class="section-sub">Explorá nuestra amplia gama de productos químicos por categoría.</p>
+    <div class="card-grid">
+      <div class="cat-card" onclick="showPage('productos')"><div class="cat-icon">⚗️</div><div class="cat-name">Reactivos de Lab.</div><div class="cat-count">320 productos</div></div>
+      <div class="cat-card" onclick="showPage('productos')"><div class="cat-icon">🏭</div><div class="cat-name">Químicos Industriales</div><div class="cat-count">280 productos</div></div>
+      <div class="cat-card" onclick="showPage('productos')"><div class="cat-icon">🌱</div><div class="cat-name">Agroquímicos</div><div class="cat-count">190 productos</div></div>
+      <div class="cat-card" onclick="showPage('productos')"><div class="cat-icon">💊</div><div class="cat-name">Solventes</div><div class="cat-count">150 productos</div></div>
+      <div class="cat-card" onclick="showPage('productos')"><div class="cat-icon">🧴</div><div class="cat-name">Ácidos y Bases</div><div class="cat-count">130 productos</div></div>
+      <div class="cat-card" onclick="showPage('productos')"><div class="cat-icon">🔬</div><div class="cat-name">Gases Industriales</div><div class="cat-count">90 productos</div></div>
+    </div>
+  </div>
+
+  <div style="background:#e8f4fd; padding: 1.5rem 2rem;">
+    <div style="max-width:1200px; margin:0 auto; display:flex; gap:1rem; align-items:center; flex-wrap:wrap;">
+      <span style="font-size:1.4rem;">⚠️</span>
+      <div>
+        <strong style="color:var(--navy);">Compra responsable de químicos</strong>
+        <p style="font-size:.85rem; color:#4a6a8a; margin:0;">Todos los productos requieren habilitación comercial. Quimex Market verifica la identidad y licencia de cada cliente antes de procesar pedidos.</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ================================================================ -->
+<!-- PÁGINA: PRODUCTOS -->
+<!-- ================================================================ -->
+<div class="page" id="page-productos">
+
+  <div style="background:linear-gradient(135deg,var(--navy),var(--dark)); padding:2.5rem 2rem;">
+    <div style="max-width:1200px; margin:0 auto;">
+      <h1 style="color:var(--white); font-size:1.8rem; font-weight:800; margin-bottom:.3rem;">Catálogo de Productos</h1>
+      <p style="color:var(--text); font-size:.9rem;">Registro: <span style="color:var(--accent); font-family:monospace;">PRODUCTO_QUIMICO</span> — Clave primaria: CodigoProducto</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="filter-bar">
+      <button class="filter-btn active" onclick="filterProducts('todos', this)">Todos</button>
+      <button class="filter-btn" onclick="filterProducts('Reactivo de Laboratorio', this)">Lab.</button>
+      <button class="filter-btn" onclick="filterProducts('Químico Industrial', this)">Industrial</button>
+      <button class="filter-btn" onclick="filterProducts('Agroquímico', this)">Agro</button>
+      <button class="filter-btn" onclick="filterProducts('Solvente', this)">Solventes</button>
+      <button class="filter-btn" onclick="filterProducts('Ácido', this)">Ácidos</button>
+    </div>
+    <div class="product-grid" id="product-grid"></div>
+  </div>
+</div>
+
+<!-- ================================================================ -->
+<!-- PÁGINA: CLIENTES -->
+<!-- ================================================================ -->
+<div class="page" id="page-clientes">
+
+  <div style="background:linear-gradient(135deg,var(--navy),var(--dark)); padding:2.5rem 2rem;">
+    <div style="max-width:1200px; margin:0 auto;">
+      <h1 style="color:var(--white); font-size:1.8rem; font-weight:800; margin-bottom:.3rem;">Clientes Registrados</h1>
+      <p style="color:var(--text); font-size:.9rem;">Registro: <span style="color:var(--accent); font-family:monospace;">CLIENTE</span> — Clave primaria: CodigoCliente · Clave secundaria: DNI · Campo continente: Direccion</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Cód. Cliente</th>
+            <th>Nombre y Apellido</th>
+            <th>DNI</th>
+            <th>Correo</th>
+            <th>Teléfono</th>
+            <th>Ciudad</th>
+            <th>Provincia</th>
+          </tr>
+        </thead>
+        <tbody id="client-table"></tbody>
+      </table>
+    </div>
+
+    <div style="margin-top:2rem;">
+      <div class="divider"></div>
+      <h3 style="font-size:1.1rem; font-weight:700; color:var(--navy); margin-bottom:1rem;">Detalle de clientes — Campo continente <code style="background:#e3f2fd;padding:.1rem .4rem;border-radius:4px;color:var(--blue);">Direccion</code></h3>
+      <div class="info-grid" id="client-cards"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================ -->
+<!-- PÁGINA: PROVEEDORES -->
+<!-- ================================================================ -->
+<div class="page" id="page-proveedores">
+
+  <div style="background:linear-gradient(135deg,var(--navy),var(--dark)); padding:2.5rem 2rem;">
+    <div style="max-width:1200px; margin:0 auto;">
+      <h1 style="color:var(--white); font-size:1.8rem; font-weight:800; margin-bottom:.3rem;">Proveedores Habilitados</h1>
+      <p style="color:var(--text); font-size:.9rem;">Empresas certificadas que abastecen el catálogo de Quimex Market</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="info-grid" id="provider-cards"></div>
+  </div>
+</div>
+
+<!-- ================================================================ -->
+<!-- PÁGINA: PEDIDOS -->
+<!-- ================================================================ -->
+<div class="page" id="page-pedidos">
+
+  <div style="background:linear-gradient(135deg,var(--navy),var(--dark)); padding:2.5rem 2rem;">
+    <div style="max-width:1200px; margin:0 auto;">
+      <h1 style="color:var(--white); font-size:1.8rem; font-weight:800; margin-bottom:.3rem;">Registro de Pedidos</h1>
+      <p style="color:var(--text); font-size:.9rem;">Registro: <span style="color:var(--accent); font-family:monospace;">PEDIDO</span> — Clave primaria: NumeroPedido · Clave foránea: CodigoCliente · Campo continente: FechaPedido</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>N.º Pedido</th>
+            <th>Cód. Cliente</th>
+            <th>Fecha (Dia.Mes.Anio)</th>
+            <th>Total Compra</th>
+            <th>Estado</th>
+          </tr>
+        </thead>
+        <tbody id="order-table"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================ -->
+<!-- PÁGINA: REGISTROS (ACADÉMICA) -->
+<!-- ================================================================ -->
+<div class="page" id="page-registros">
+
+  <div class="academic-hero">
+    <h1>📋 Estructura de Registros</h1>
+    <p>Página académica — Tema 7: Registros | Algoritmos y Estructuras de Datos 2026 | Quimex Market</p>
+  </div>
+
+  <!-- CONCEPTOS -->
+  <div class="section">
+    <div class="divider"></div>
+    <h2 class="section-title">Conceptos <span>Fundamentales</span></h2>
+    <p class="section-sub">Definiciones según la metodología de la cátedra</p>
+
+    <div class="concept-grid">
+      <div class="concept-card">
+        <div class="concept-icon">🗂️</div>
+        <h3>¿Qué es un Registro?</h3>
+        <p>Es un tipo de dato <strong>estructurado, estático y complejo</strong> que agrupa elementos de <strong>distintos tipos</strong>. Se almacena en memoria interna y se trata como una <strong>única entidad</strong>.</p>
+      </div>
+      <div class="concept-card">
+        <div class="concept-icon">🏷️</div>
+        <h3>¿Qué es un Campo?</h3>
+        <p>Es la <strong>entidad lógica más pequeña</strong> (unidad mínima de información) que compone un registro. Cada campo tiene tres atributos: <strong>Nombre, Tipo y Tamaño</strong>.</p>
+      </div>
+      <div class="concept-card">
+        <div class="concept-icon">📦</div>
+        <h3>Campo Contenido</h3>
+        <p>Campo <strong>simple</strong> que almacena un único dato elemental (entero, alfanumérico, real). Ejemplo: <code>CodigoProducto</code>, <code>NombreProducto</code>, <code>Precio</code>.</p>
+      </div>
+      <div class="concept-card">
+        <div class="concept-icon">📂</div>
+        <h3>Campo Continente</h3>
+        <p>Campo formado por <strong>otros campos más simples</strong>, es decir, contiene una subestructura (otro registro). Ejemplo: <code>Direccion</code> dentro de CLIENTE contiene Calle, Ciudad, País.</p>
+      </div>
+      <div class="concept-card">
+        <div class="concept-icon">🔑</div>
+        <h3>Clave Primaria</h3>
+        <p>Campo que <strong>identifica de forma única</strong> a un registro. Nunca puede repetirse. Ejemplo: <code>CodigoProducto</code> es distinto para cada producto en el catálogo.</p>
+      </div>
+      <div class="concept-card">
+        <div class="concept-icon">🗝️</div>
+        <h3>Clave Secundaria</h3>
+        <p>Campo que <strong>no identifica unívocamente</strong> al registro, pero sirve para procesarlo en un orden alternativo o vincularlo a otro. Si vincula a otro registro, se llama <strong>foránea</strong>.</p>
+      </div>
+      <div class="concept-card">
+        <div class="concept-icon">🎲</div>
+        <h3>Heterogeneidad de Datos</h3>
+        <p>Propiedad de los registros que indica que sus campos pueden ser de <strong>diferentes tipos</strong> simultáneamente: numérico, alfanumérico, real, etc. en el mismo registro.</p>
+      </div>
+      <div class="concept-card">
+        <div class="concept-icon">→</div>
+        <h3>Selector de Campo</h3>
+        <p>El símbolo <strong>punto ( . )</strong> que permite acceder a un campo específico dentro de un registro: <code>Registro.Campo</code>. Con continentes: <code>Registro.Continente.Campo</code>.</p>
+      </div>
+    </div>
+
+    <!-- REGISTROS LITERARIOS -->
+    <div class="divider"></div>
+    <h2 class="section-title" style="margin-top:1rem;">Definición <span>Literaria</span> de Registros</h2>
+    <p class="section-sub">Formato exacto utilizado por la cátedra (nivel literario)</p>
+
+    <!-- FECHA -->
+    <div class="reg-block">
+      <div class="reg-header">
+        <h3>REGISTRO: FECHA</h3>
+        <span class="reg-tag">Auxiliar · Reutilizable</span>
+      </div>
+      <div class="reg-body">
+        <div class="reg-field"><span class="f-name">Dia</span><span class="f-type">N</span><span class="f-size">(2)</span><span class="f-badge f-cont">CONTENIDO</span></div>
+        <div class="reg-field"><span class="f-name">Mes</span><span class="f-type">N</span><span class="f-size">(2)</span><span class="f-badge f-cont">CONTENIDO</span></div>
+        <div class="reg-field"><span class="f-name">Anio</span><span class="f-type">N</span><span class="f-size">(4)</span><span class="f-badge f-cont">CONTENIDO</span></div>
+        <div class="f-end">Fin Registro</div>
+      </div>
+    </div>
+
+    <!-- DIRECCION -->
+    <div class="reg-block">
+      <div class="reg-header">
+        <h3>REGISTRO: DIRECCION</h3>
+        <span class="reg-tag">Auxiliar · Reutilizable</span>
+      </div>
+      <div class="reg-body">
+        <div class="reg-field"><span class="f-name">Calle</span><span class="f-type">AN</span><span class="f-size">(50)</span><span class="f-badge f-cont">CONTENIDO</span></div>
+        <div class="reg-field"><span class="f-name">Numero</span><span class="f-type">N</span><span class="f-size">(5)</span><span class="f-badge f-cont">CONTENIDO</span></div>
+        <div class="reg-field"><span class="f-name">Ciudad</span><span class="f-type">AN</span><span class="f-size">(30)</span><span class="f-badge f-cont">CONTENIDO</span></div>
+        <div class="reg-field"><span class="f-name">Provincia</span><span class="f-type">AN</span><span class="f-size">(30)</span><span class="f-badge f-cont">CONTENIDO</span></div>
+        <div class="reg-field"><span class="f-name">Pais</span><span class="f-type">AN</span><span class="f-size">(30)</span><span class="f-badge f-cont">CONTENIDO</span></div>
+        <div class="f-end">Fin Registro</div>
+      </div>
+    </div>
+
+    <!-- PRODUCTO_QUIMICO -->
+    <div class="reg-block">
+      <div class="reg-header">
+        <h3>REGISTRO: PRODUCTO_QUIMICO</h3>
+        <span class="reg-tag">Principal · Catálogo</span>
+      </div>
+      <div class="reg-body">
+        <div class="reg-field"><span class="f-name">CodigoProducto</span><span class="f-type">N</span><span class="f-size">(6)</span><span class="f-badge f-pk">CLAVE PRIMARIA</span></div>
+        <div class="reg-field"><span class="f-name">NombreProducto</span><span class="f-type">AN</span><span class="f-size">(50)</span><span class="f-badge f-cont">CONTENIDO</span></div>
+        <div class="reg-field"><span class="f-name">Categoria</span><span class="f-type">AN</span><span class="f-size">(30)</span><span class="f-badge f-cont">CONTENIDO</span></div>
+        <div class="reg-field"><span class="f-name">Precio</span><span class="f-type">R</span><span class="f-size">(10,2)</span><span class="f-badge f-cont">CONTENIDO</span></div>
+        <div class="reg-field"><span class="f-name">Stock</span><span class="f-type">N</span><span class="f-size">(6)</span><span class="f-badge f-cont">CONTENIDO</span></div>
+        <div class="reg-field"><span class="f-name">UnidadMedida</span><span class="f-type">AN</span><span class="f-size">(10)</span><span class="f-badge f-cont">CONTENIDO</span></div>
+        <div class="reg-field"><span class="f-name">NivelPeligrosidad</span><span class="f-type">AN</span><span class="f-size">(20)</span><span class="f-badge f-cont">CONTENIDO</span></div>
+        <div class="reg-field"><span class="f-name">Fabricante</span><span class="f-type">AN</span><span class="f-size">(40)</span><span class="f-badge f-cont">CONTENIDO</span></div>
+        <div class="f-end">Fin Registro</div>
+      </div>
+    </div>
+
+    <!-- CLIENTE -->
+    <div class="reg-block">
+      <div class="reg-header">
+        <h3>REGISTRO: CLIENTE</h3>
+        <span class="reg-tag">Principal · Contiene campo CONTINENTE</span>
+      </div>
+      <div class="reg-body">
+        <div class="reg-field"><span class="f-name">CodigoCliente</span><span class="f-type">N</span><span class="f-size">(6)</span><span class="f-badge f-pk">CLAVE PRIMARIA</span></div>
+        <div class="reg-field"><span class="f-name">Nombre</span><span class="f-type">AN</span><span class="f-size">(30)</span><span class="f-badge f-cont">CONTENIDO</span></div>
+        <div class="reg-field"><span class="f-name">Apellido</span><span class="f-type">AN</span><span class="f-size">(30)</span><span class="f-badge f-cont">CONTENIDO</span></div>
+        <div class="reg-field"><span class="f-name">DNI</span><span class="f-type">N</span><span class="f-size">(8)</span><span class="f-badge f-sk">CLAVE SECUNDARIA</span></div>
+        <div class="reg-field"><span class="f-name">Correo</span><span class="f-type">AN</span><span class="f-size">(50)</span><span class="f-badge f-cont">CONTENIDO</span></div>
+        <div class="reg-field"><span class="f-name">Telefono</span><span class="f-type">AN</span><span class="f-size">(20)</span><span class="f-badge f-cont">CONTENIDO</span></div>
+        <!-- CONTINENTE -->
+        <div style="margin:.5rem 0; padding:.5rem .7rem; background:rgba(0,188,212,.08); border-radius:6px; border-left:3px solid var(--cyan);">
+          <div style="color:var(--cyan); font-family:monospace; font-size:.82rem; font-weight:700; margin-bottom:.4rem;">Direccion = REGISTRO DIRECCION &nbsp;<span style="font-size:.68rem; background:rgba(0,188,212,.2); padding:.1rem .5rem; border-radius:4px;">CAMPO CONTINENTE</span></div>
+          <div class="sub-reg">
+            <div class="sub-reg-label">↳ Subcampos de Direccion:</div>
+            <div class="reg-field" style="background:transparent;"><span class="f-name">Calle</span><span class="f-type">AN</span><span class="f-size">(50)</span></div>
+            <div class="reg-field" style="background:transparent;"><span class="f-name">Numero</span><span class="f-type">N</span><span class="f-size">(5)</span></div>
+            <div class="reg-field" style="background:transparent;"><span class="f-name">Ciudad</span><span class="f-type">AN</span><span class="f-size">(30)</span></div>
+            <div class="reg-field" style="background:transparent;"><span class="f-name">Provincia</span><span class="f-type">AN</span><span class="f-size">(30)</span></div>
+            <div class="reg-field" style="background:transparent;"><span class="f-name">Pais</span><span class="f-type">AN</span><span class="f-size">(30)</span></div>
+            <div class="f-end">Fin Registro</div>
+          </div>
+        </div>
+        <div class="f-end">Fin Registro</div>
+      </div>
+    </div>
+
+    <!-- PEDIDO -->
+    <div class="reg-block">
+      <div class="reg-header">
+        <h3>REGISTRO: PEDIDO</h3>
+        <span class="reg-tag">Principal · Contiene campo CONTINENTE + clave FORÁNEA</span>
+      </div>
+      <div class="reg-body">
+        <div class="reg-field"><span class="f-name">NumeroPedido</span><span class="f-type">N</span><span class="f-size">(8)</span><span class="f-badge f-pk">CLAVE PRIMARIA</span></div>
+        <div class="reg-field"><span class="f-name">CodigoCliente</span><span class="f-type">N</span><span class="f-size">(6)</span><span class="f-badge f-fk">CLAVE FORÁNEA</span></div>
+        <!-- CONTINENTE FECHA -->
+        <div style="margin:.5rem 0; padding:.5rem .7rem; background:rgba(0,188,212,.08); border-radius:6px; border-left:3px solid var(--cyan);">
+          <div style="color:var(--cyan); font-family:monospace; font-size:.82rem; font-weight:700; margin-bottom:.4rem;">FechaPedido = REGISTRO FECHA &nbsp;<span style="font-size:.68rem; background:rgba(0,188,212,.2); padding:.1rem .5rem; border-radius:4px;">CAMPO CONTINENTE</span></div>
+          <div class="sub-reg">
+            <div class="sub-reg-label">↳ Subcampos de FechaPedido:</div>
+            <div class="reg-field" style="background:transparent;"><span class="f-name">Dia</span><span class="f-type">N</span><span class="f-size">(2)</span></div>
+            <div class="reg-field" style="background:transparent;"><span class="f-name">Mes</span><span class="f-type">N</span><span class="f-size">(2)</span></div>
+            <div class="reg-field" style="background:transparent;"><span class="f-name">Anio</span><span class="f-type">N</span><span class="f-size">(4)</span></div>
+            <div class="f-end">Fin Registro</div>
+          </div>
+        </div>
+        <div class="reg-field"><span class="f-name">TotalCompra</span><span class="f-type">R</span><span class="f-size">(12,2)</span><span class="f-badge f-cont">CONTENIDO</span></div>
+        <div class="reg-field"><span class="f-name">Estado</span><span class="f-type">AN</span><span class="f-size">(20)</span><span class="f-badge f-cont">CONTENIDO</span></div>
+        <div class="f-end">Fin Registro</div>
+      </div>
+    </div>
+
+    <!-- HETEROGENEIDAD -->
+    <div class="divider" style="margin-top:1rem;"></div>
+    <h2 class="section-title">Heterogeneidad <span>de Datos</span></h2>
+    <p class="section-sub">El registro PRODUCTO_QUIMICO demuestra que un mismo registro puede contener campos de distintos tipos.</p>
+    <div class="hetero-grid" style="margin-bottom:2rem;">
+      <div class="hetero-card"><div class="hetero-field">CodigoProducto</div><div class="hetero-type">N (6)</div><div class="hetero-label">Numérico entero</div></div>
+      <div class="hetero-card"><div class="hetero-field">NombreProducto</div><div class="hetero-type">AN (50)</div><div class="hetero-label">Alfanumérico</div></div>
+      <div class="hetero-card"><div class="hetero-field">Precio</div><div class="hetero-type">R (10,2)</div><div class="hetero-label">Real (decimal)</div></div>
+      <div class="hetero-card"><div class="hetero-field">Stock</div><div class="hetero-type">N (6)</div><div class="hetero-label">Numérico entero</div></div>
+      <div class="hetero-card"><div class="hetero-field">Categoria</div><div class="hetero-type">AN (30)</div><div class="hetero-label">Alfanumérico</div></div>
+      <div class="hetero-card"><div class="hetero-field">Fabricante</div><div class="hetero-type">AN (40)</div><div class="hetero-label">Alfanumérico</div></div>
+    </div>
+    <div style="background:#e3f2fd; border-left:4px solid var(--blue); padding:1rem 1.5rem; border-radius:0 8px 8px 0; margin-bottom:2rem;">
+      <strong style="color:var(--navy);">Conclusión:</strong> <span style="color:#2a4a7a;">En el registro PRODUCTO_QUIMICO coexisten tipos <strong>N</strong> (numérico), <strong>AN</strong> (alfanumérico) y <strong>R</strong> (real). Esto demuestra la <strong>heterogeneidad de datos</strong> característica de los registros.</span>
+    </div>
+
+    <!-- SELECTOR DE CAMPO -->
+    <div class="divider"></div>
+    <h2 class="section-title">Selector <span>de Campo</span></h2>
+    <p class="section-sub">El punto <strong>( . )</strong> permite acceder a un campo específico dentro del registro.</p>
+
+    <div class="reg-block">
+      <div class="reg-body">
+        <table class="selector-table">
+          <thead>
+            <tr><th>Expresión</th><th>Descripción</th><th>Nivel</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="sel-expr">Producto.CodigoProducto</td><td class="sel-desc">Accede al código del producto (clave primaria)</td><td><span class="badge badge-blue">1 nivel</span></td></tr>
+            <tr><td class="sel-expr">Producto.NombreProducto</td><td class="sel-desc">Accede al nombre del producto</td><td><span class="badge badge-blue">1 nivel</span></td></tr>
+            <tr><td class="sel-expr">Producto.Precio</td><td class="sel-desc">Accede al precio (tipo Real)</td><td><span class="badge badge-blue">1 nivel</span></td></tr>
+            <tr><td class="sel-expr">Cliente.CodigoCliente</td><td class="sel-desc">Accede a la clave primaria del cliente</td><td><span class="badge badge-blue">1 nivel</span></td></tr>
+            <tr><td class="sel-expr">Cliente.DNI</td><td class="sel-desc">Accede al DNI (clave secundaria)</td><td><span class="badge badge-blue">1 nivel</span></td></tr>
+            <tr><td class="sel-expr">Cliente.Direccion.Ciudad</td><td class="sel-desc">Accede a Ciudad dentro del campo continente Direccion</td><td><span class="badge badge-green">2 niveles</span></td></tr>
+            <tr><td class="sel-expr">Cliente.Direccion.Pais</td><td class="sel-desc">Accede a País dentro del campo continente Direccion</td><td><span class="badge badge-green">2 niveles</span></td></tr>
+            <tr><td class="sel-expr">Pedido.NumeroPedido</td><td class="sel-desc">Accede al número de pedido (clave primaria)</td><td><span class="badge badge-blue">1 nivel</span></td></tr>
+            <tr><td class="sel-expr">Pedido.CodigoCliente</td><td class="sel-desc">Accede a la clave foránea que vincula con CLIENTE</td><td><span class="badge badge-blue">1 nivel</span></td></tr>
+            <tr><td class="sel-expr">Pedido.FechaPedido.Anio</td><td class="sel-desc">Accede al año dentro del campo continente FechaPedido</td><td><span class="badge badge-green">2 niveles</span></td></tr>
+            <tr><td class="sel-expr">Pedido.FechaPedido.Mes</td><td class="sel-desc">Accede al mes dentro del campo continente FechaPedido</td><td><span class="badge badge-green">2 niveles</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div><!-- /section -->
+</div><!-- /page-registros -->
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="foot-logo">Quimex <span>Market</span></div>
+  <div class="foot-links">
+    <button onclick="showPage('inicio')">Inicio</button>
+    <button onclick="showPage('productos')">Productos</button>
+    <button onclick="showPage('clientes')">Clientes</button>
+    <button onclick="showPage('proveedores')">Proveedores</button>
+    <button onclick="showPage('pedidos')">Pedidos</button>
+    <button onclick="showPage('registros')">Registros</button>
+  </div>
+  <p>Marketplace de Productos Químicos Industriales, Agrícolas y de Laboratorio</p>
+  <div class="foot-badge">Actividad Formativa N.º 2 — Algoritmos y Estructuras de Datos 2026</div>
+</footer>
+
+<script>
+// ===== DATA =====
+const productos = [
+  { codigo:100101, nombre:"Ácido Clorhídrico 37%", cat:"Ácido", precio:4850.00, stock:240, unidad:"L", peligro:"Alto", fab:"Merck Argentina" },
+  { codigo:100102, nombre:"Hidróxido de Sodio", cat:"Químico Industrial", precio:1290.00, stock:580, unidad:"kg", peligro:"Medio", fab:"Bunge Química" },
+  { codigo:100103, nombre:"Acetato de Etilo", cat:"Solvente", precio:3100.00, stock:320, unidad:"L", peligro:"Medio", fab:"YPF Química" },
+  { codigo:100104, nombre:"Sulfato de Cobre II", cat:"Reactivo de Laboratorio", precio:2750.00, stock:150, unidad:"kg", peligro:"Bajo", fab:"Anedra" },
+  { codigo:100105, nombre:"Glifosato 48%", cat:"Agroquímico", precio:5600.00, stock:400, unidad:"L", peligro:"Medio", fab:"Monsanto Argentina" },
+  { codigo:100106, nombre:"Cloruro de Calcio", cat:"Químico Industrial", precio:980.00, stock:700, unidad:"kg", peligro:"Bajo", fab:"Dow Chemical" },
+  { codigo:100107, nombre:"Formaldehído 37%", cat:"Reactivo de Laboratorio", precio:3400.00, stock:90, unidad:"L", peligro:"Alto", fab:"Merck Argentina" },
+  { codigo:100108, nombre:"Tolueno Puro", cat:"Solvente", precio:2900.00, stock:210, unidad:"L", peligro:"Alto", fab:"YPF Química" },
+  { codigo:100109, nombre:"Urea Agrícola 46%", cat:"Agroquímico", precio:1850.00, stock:900, unidad:"kg", peligro:"Bajo", fab:"Profertil" },
+  { codigo:100110, nombre:"Peróxido de Hidrógeno 30%", cat:"Reactivo de Laboratorio", precio:2200.00, stock:170, unidad:"L", peligro:"Medio", fab:"Anedra" },
+  { codigo:100111, nombre:"Ácido Sulfúrico 98%", cat:"Ácido", precio:3800.00, stock:310, unidad:"L", peligro:"Alto", fab:"Merck Argentina" },
+  { codigo:100112, nombre:"Etanol 96°", cat:"Solvente", precio:1600.00, stock:500, unidad:"L", peligro:"Medio", fab:"Bioetanol SA" },
+];
+
+const clientes = [
+  { cod:200001, nombre:"Martín", apellido:"Rodríguez", dni:30145678, correo:"martin.r@unlp.edu.ar", tel:"0221-4556231", dir:{ calle:"Av. 7", nro:1241, ciudad:"La Plata", prov:"Buenos Aires", pais:"Argentina" } },
+  { cod:200002, nombre:"Laura", apellido:"Fernández", dni:35762890, correo:"lfernandez@industroquim.com", tel:"011-48903312", dir:{ calle:"Av. Corrientes", nro:5480, ciudad:"CABA", prov:"CABA", pais:"Argentina" } },
+  { cod:200003, nombre:"Carlos", apellido:"Gutiérrez", dni:28901234, correo:"cgutierrez@univcordoba.edu.ar", tel:"0351-4721801", dir:{ calle:"Blvd. San Juan", nro:801, ciudad:"Córdoba", prov:"Córdoba", pais:"Argentina" } },
+  { cod:200004, nombre:"Valeria", apellido:"Moreno", dni:40234567, correo:"vmoreno@labfarmacor.com", tel:"011-49001215", dir:{ calle:"Av. Santa Fe", nro:3320, ciudad:"CABA", prov:"CABA", pais:"Argentina" } },
+  { cod:200005, nombre:"Esteban", apellido:"Torres", dni:33456789, correo:"etorres@agroquimrosario.com", tel:"0341-4888001", dir:{ calle:"Av. Pellegrini", nro:1542, ciudad:"Rosario", prov:"Santa Fe", pais:"Argentina" } },
+];
+
+const proveedores = [
+  { nombre:"Merck Argentina S.A.", rubro:"Reactivos y químicos analíticos", ciudad:"Buenos Aires", contacto:"ventas@merck.com.ar", productos:320 },
+  { nombre:"YPF Química", rubro:"Solventes y petroquímicos", ciudad:"Luján de Cuyo, Mendoza", contacto:"quimica@ypf.com", productos:185 },
+  { nombre:"Dow Chemical Argentina", rubro:"Polímeros e industriales", ciudad:"Zárate, Buenos Aires", contacto:"info@dow.com.ar", productos:210 },
+  { nombre:"Anedra", rubro:"Reactivos de laboratorio", ciudad:"Buenos Aires", contacto:"ventas@anedra.com.ar", productos:290 },
+  { nombre:"Monsanto Argentina", rubro:"Agroquímicos y herbicidas", ciudad:"Buenos Aires", contacto:"agro@monsanto.com.ar", productos:95 },
+  { nombre:"Profertil S.A.", rubro:"Fertilizantes agrícolas", ciudad:"Bahía Blanca", contacto:"ventas@profertil.com.ar", productos:80 },
+  { nombre:"Bunge Química", rubro:"Ácidos y bases industriales", ciudad:"Buenos Aires", contacto:"bquimica@bunge.com.ar", productos:140 },
+  { nombre:"Bioetanol SA", rubro:"Solventes de origen vegetal", ciudad:"Tucumán", contacto:"info@bioetanol.com.ar", productos:45 },
+];
+
+const pedidos = [
+  { num:10000001, codCli:200002, fecha:{dia:3,mes:6,anio:2026}, total:97000.00, estado:"Entregado" },
+  { num:10000002, codCli:200001, fecha:{dia:5,mes:6,anio:2026}, total:13750.00, estado:"En tránsito" },
+  { num:10000003, codCli:200004, fecha:{dia:8,mes:6,anio:2026}, total:51000.00, estado:"Entregado" },
+  { num:10000004, codCli:200003, fecha:{dia:10,mes:6,anio:2026}, total:29400.00, estado:"Procesando" },
+  { num:10000005, codCli:200005, fecha:{dia:12,mes:6,anio:2026}, total:84000.00, estado:"En tránsito" },
+  { num:10000006, codCli:200001, fecha:{dia:15,mes:6,anio:2026}, total:6200.00, estado:"Procesando" },
+  { num:10000007, codCli:200002, fecha:{dia:17,mes:6,anio:2026}, total:115500.00, estado:"Pendiente" },
+];
+
+// ===== HELPERS =====
+const dangerClass = p => p === 'Alto' ? 'danger-alto' : p === 'Medio' ? 'danger-medio' : 'danger-bajo';
+const dangerIcon  = p => p === 'Alto' ? '⚠️' : p === 'Medio' ? '🟡' : '🟢';
+const catIcon = c => ({ 'Ácido':'⚗️','Químico Industrial':'🏭','Solvente':'💧','Reactivo de Laboratorio':'🔬','Agroquímico':'🌱' }[c] || '🧪');
+const fmt = n => '$ ' + n.toLocaleString('es-AR', {minimumFractionDigits:2});
+
+const stateClass = s => ({
+  'Entregado':'badge-green','En tránsito':'badge-blue','Procesando':'badge-orange','Pendiente':'badge-gray'
+}[s] || 'badge-gray');
+
+// ===== RENDER =====
+function renderProducts(filter) {
+  const grid = document.getElementById('product-grid');
+  const list = filter === 'todos' ? productos : productos.filter(p => p.cat === filter);
+  grid.innerHTML = list.map(p => `
+    <div class="product-card">
+      <div class="product-img">
+        ${catIcon(p.cat)}
+        <span class="danger-badge ${dangerClass(p.peligro)}">${dangerIcon(p.peligro)} ${p.peligro}</span>
+      </div>
+      <div class="product-body">
+        <div class="product-code">COD: ${p.codigo}</div>
+        <div class="product-name">${p.nombre}</div>
+        <div class="product-cat">${p.cat}</div>
+        <div class="product-meta">
+          <span class="product-price">${fmt(p.precio)}</span>
+          <span class="product-stock">Stock: ${p.stock} ${p.unidad}</span>
+        </div>
+        <div class="product-fab">🏭 ${p.fab}</div>
+        <button class="add-btn">Agregar al carrito</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderClients() {
+  document.getElementById('client-table').innerHTML = clientes.map(c => `
+    <tr>
+      <td><strong>${c.cod}</strong></td>
+      <td>${c.nombre} ${c.apellido}</td>
+      <td>${c.dni}</td>
+      <td>${c.correo}</td>
+      <td>${c.tel}</td>
+      <td>${c.dir.ciudad}</td>
+      <td>${c.dir.prov}</td>
+    </tr>
+  `).join('');
+
+  document.getElementById('client-cards').innerHTML = clientes.map(c => `
+    <div class="info-card">
+      <h3>👤 ${c.nombre} ${c.apellido} <span style="color:var(--gray);font-weight:400;font-size:.82rem;">#${c.cod}</span></h3>
+      <div class="info-row"><span class="info-key">Cliente.CodigoCliente</span><span class="info-val">${c.cod}</span></div>
+      <div class="info-row"><span class="info-key">Cliente.DNI</span><span class="info-val">${c.dni}</span></div>
+      <div class="info-row"><span class="info-key">Cliente.Direccion.Calle</span><span class="info-val">${c.dir.calle} ${c.dir.nro}</span></div>
+      <div class="info-row"><span class="info-key">Cliente.Direccion.Ciudad</span><span class="info-val">${c.dir.ciudad}</span></div>
+      <div class="info-row"><span class="info-key">Cliente.Direccion.Provincia</span><span class="info-val">${c.dir.prov}</span></div>
+      <div class="info-row"><span class="info-key">Cliente.Direccion.Pais</span><span class="info-val">${c.dir.pais}</span></div>
+    </div>
+  `).join('');
+}
+
+function renderProviders() {
+  document.getElementById('provider-cards').innerHTML = proveedores.map(p => `
+    <div class="info-card">
+      <h3>🏭 ${p.nombre}</h3>
+      <div class="info-row"><span class="info-key">Rubro</span><span class="info-val">${p.rubro}</span></div>
+      <div class="info-row"><span class="info-key">Ciudad</span><span class="info-val">${p.ciudad}</span></div>
+      <div class="info-row"><span class="info-key">Contacto</span><span class="info-val" style="font-size:.8rem;">${p.contacto}</span></div>
+      <div class="info-row"><span class="info-key">Productos en catálogo</span><span class="info-val">${p.productos}</span></div>
+    </div>
+  `).join('');
+}
+
+function renderOrders() {
+  document.getElementById('order-table').innerHTML = pedidos.map(o => `
+    <tr>
+      <td><strong>${o.num}</strong></td>
+      <td>${o.codCli}</td>
+      <td style="font-family:monospace;">${o.fecha.dia}.${String(o.fecha.mes).padStart(2,'0')}.${o.fecha.anio}</td>
+      <td><strong>${fmt(o.total)}</strong></td>
+      <td><span class="badge ${stateClass(o.estado)}">${o.estado}</span></td>
+    </tr>
+  `).join('');
+}
+
+// ===== NAV =====
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-links button').forEach(b => b.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  document.getElementById('nav-' + id).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+// ===== FILTER =====
+function filterProducts(cat, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderProducts(cat);
+}
+
+// ===== INIT =====
+renderProducts('todos');
+renderClients();
+renderProviders();
+renderOrders();
+</script>
+</body>
+</html>
+65c0;
       --sky:    #1e88e5;
       --light:  #42a5f5;
       --cyan:   #00bcd4;
